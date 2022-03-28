@@ -1,9 +1,12 @@
 package com.books.BookApplication.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,23 +31,33 @@ public class BookController {
 		log.info("Inside submitBookData method");
 
 		String bookData = bookService.saveBookData(book);
-		
+
 		log.info("Returning response");
 
 		return bookData;
 
 	}
-	
-	@GetMapping(value="/book/fetchBookData")
-	public Book getBookData(@RequestBody int bookId ) {
-		
+
+	@GetMapping(value = "/book/fetchBookData")
+	public Book getBookData(@RequestBody int bookId) {
+
 		log.info("Inside get book data method");
-		
+
 		Book book = bookService.getBookData(bookId);
-		
+
 		return book;
-		
-		
+
+	}
+
+	@GetMapping(value = "/book/fetchBookPaginationSorting/{pageNo}/{pageSize}")
+	public List<Book> getBookDataPaginated(@PathVariable int pageNo, @PathVariable int pageSize) {
+
+		log.info("Inside get book data method");
+
+		List<Book> book = bookService.getBookDataPaginated(pageNo, pageSize);
+
+		return book;
+
 	}
 
 }
